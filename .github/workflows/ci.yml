@@ -46,30 +46,30 @@ jobs:
       - name: deps
         run: sudo apt-get update -qq && sudo apt-get install -y -qq clang
       - name: make test
-        run: make -f Makefile.port test
+        run: make test
       - name: native vs scalar
-        run: make -f Makefile.port libfuzz-ci
+        run: make libfuzz-ci
 
   test-macos:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
       - name: make test
-        run: make -f Makefile.port test
+        run: make test
 
   san:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: make  san
-        run: make -f Makefile.port san
+        run: make san
 
   tsan:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: make tsan
-        run: make -f Makefile.port tsan
+        run: make tsan
 
   diffuzz-arch:
     runs-on: ubuntu-latest
@@ -78,4 +78,4 @@ jobs:
       - name: deps
         run: sudo apt-get update -qq && sudo apt-get install -y -qq clang
       - name: native vs scalar
-        run: make -f Makefile.port libfuzz-ci
+        run: make libfuzz-ci
