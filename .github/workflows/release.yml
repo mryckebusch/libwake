@@ -16,15 +16,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      # FIXME
-      - name: deps
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq libpcre2-dev libjson-c-dev pkg-config
-
-      # FIXME
       - name: build and test
-        run: |
-          make test
-          make conformance
+        run: make -f Makefile.port test
 
       - name: source tarball
         run: |

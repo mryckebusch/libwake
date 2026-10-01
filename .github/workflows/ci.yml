@@ -41,53 +41,41 @@ jobs:
       matrix:
         runner: [ubuntu-latest, ubuntu-24.04-arm]
     runs-on: ${{ matrix.runner }}
-    # FIXME
     steps:
       - uses: actions/checkout@v4
       - name: deps
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq libpcre2-dev libjson-c-dev pkg-config
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq clang
       - name: make test
-        run: make test
-      - name: make conformance
-        run: make conformance
+        run: make -f Makefile.port test
       - name: native vs scalar
-        run: make diffuzz-c-arch
+        run: make -f Makefile.port libfuzz-ci
 
-  # FIXME
   test-macos:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
-      - name: deps
-        run: brew install pcre2 json-c pkg-config
       - name: make test
-        run: make test
-      - name: make conformance
-        run: make conformance
+        run: make -f Makefile.port test
 
-  # FIXME
   san:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: deps
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq libpcre2-dev libjson-c-dev pkg-config
-      - name: make san
-        run: make san
+      - name: make  san
+        run: make -f Makefile.port san
 
   tsan:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: make tsan
-        run: make tsan
+        run: make -f Makefile.port tsan
 
-  # FIXME
   diffuzz-arch:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: deps
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq libpcre2-dev libjson-c-dev pkg-config
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq clang
       - name: native vs scalar
-        run: make diffuzz-c-arch
+        run: make -f Makefile.port libfuzz-ci
